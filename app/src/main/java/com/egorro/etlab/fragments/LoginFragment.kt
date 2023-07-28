@@ -1,7 +1,5 @@
 package com.egorro.etlab.fragments
 
-import android.util.Log
-import android.widget.ImageButton
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,34 +13,34 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.egorro.etlab.R
-import com.egorro.etlab.fragments.elements.Text24
-import com.egorro.etlab.fragments.elements.TextDefault
-import com.egorro.etlab.fragments.elements.TextWithClickable
+import com.egorro.etlab.fragments.elements.AnnotatedText
+import com.egorro.etlab.fragments.elements.ClickableTextE
+import com.egorro.etlab.fragments.elements.DividerE
+import com.egorro.etlab.fragments.elements.OutlinedTextFieldE
+import com.egorro.etlab.fragments.elements.SpacerE
+import com.egorro.etlab.fragments.elements.TextE
+import com.egorro.etlab.tools.l
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -68,30 +66,24 @@ fun LoginFragment() {
 fun LoginBlock() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(PaddingValues(start = 24.dp, end = 24.dp, top = 28.dp))
     ) {
 
-        Text24(resId = R.string.welcome)
-
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(top = 18.dp)
-                .fillMaxWidth(),
-            shape = RoundedCornerShape(12.dp),
-            value = "",
-            placeholder = { Text(text = stringResource(R.string.email_address)) },
-            onValueChange = {}
+        TextE(
+            resId = R.string.welcome, style = MaterialTheme.typography.displayMedium
         )
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(top = 14.dp)
-                .fillMaxWidth(),
-            value = "",
-            onValueChange = {},
-            shape = RoundedCornerShape(12.dp),
-            placeholder = { Text(text = stringResource(R.string.password)) },
+        SpacerE()
+
+        OutlinedTextFieldE(
+            placeholderResId = R.string.email_address,
+        )
+
+        SpacerE()
+
+        OutlinedTextFieldE(
+            placeholderResId = R.string.password,
             trailingIcon = {
                 IconButton(onClick = {}) {
                     Icon(
@@ -102,70 +94,63 @@ fun LoginBlock() {
             },
         )
 
-        ClickableText(
-            modifier = Modifier.padding(top = 16.dp),
-            text = buildAnnotatedString {
-                withStyle(style = SpanStyle(color = Color.Blue, fontWeight = FontWeight.Bold)) {
-                    append(stringResource(id = R.string.forgot_password))
-                }
-            },
-            onClick = { }
+        SpacerE()
+
+        ClickableTextE(
+            annotatedTexts = arrayOf(
+                AnnotatedText(
+                    resId = R.string.forgot_password, tag = "fp",
+                    style = SpanStyle(color = Color.Blue), onClick = { l("fp") }),
+            )
         )
+
+
+        SpacerE()
 
         Button(
             modifier = Modifier
-                .padding(top = 28.dp)
-                .fillMaxWidth()
-                .height(55.dp),
+                .fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
             onClick = {}
         ) {
-            TextDefault(
+            TextE(
                 resId = R.string.login,
-                fontSize = 14
+                style = MaterialTheme.typography.bodyMedium
             )
         }
 
-        TextWithClickable(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 18.dp),
-            regularTextResId = R.string.not_a_member,
-            clickableTextResId = R.string.register_now,
-            onClick = { text ->
-                Log.d("tag", "clicked: $text")
-            }
+        SpacerE()
+
+        ClickableTextE(
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            annotatedTexts = arrayOf(
+                AnnotatedText(resId = R.string.not_a_member),
+                AnnotatedText(
+                    resId = R.string.register_now, tag = "rn",
+                    style = SpanStyle(color = Color.Blue), onClick = { l("Register now") }),
+            )
         )
 
-        Divider(
-            modifier = Modifier.padding(top = 24.dp),
-            color = Color.LightGray,
-            thickness = 0.dp
-        )
+        DividerE()
 
-        TextDefault(
-            modifier = Modifier.padding(top = 28.dp),
-            resId = R.string.or_continue_with,
-        )
+        SpacerE()
 
-        LoginWithGoogleAppleFacebook({}, {}, {})
+        TextE(resId = R.string.or_continue_with)
+
+        LoginWithGoogleAppleFacebook({ l() }, { l() }, { l() })
     }
 }
 
 @Composable
 fun ImageBlock() {
-    Box(
+    Image(
         modifier = Modifier
             .fillMaxWidth()
-            .height(350.dp)
-    ) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.img_cover),
-            contentDescription = stringResource(id = R.string.cont_desc__main_image)
-        )
-    }
+            .height(350.dp),
+        painter = painterResource(id = R.drawable.img_cover),
+        contentDescription = stringResource(id = R.string.cont_desc__main_image)
+    )
 }
 
 @Composable
@@ -174,11 +159,9 @@ fun LoginWithGoogleAppleFacebook(
     onAppleClick: () -> Unit,
     onFacebookClick: () -> Unit,
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 24.dp, bottom = 48.dp)
-    ) {
+    SpacerE()
+
+    Box(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.align(Alignment.Center),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -200,4 +183,6 @@ fun LoginWithGoogleAppleFacebook(
             )
         }
     }
+
+    SpacerE()
 }

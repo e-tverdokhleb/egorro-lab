@@ -3,7 +3,10 @@
     <string name="cont_desc__main_image">main image</string>
     <string name="welcome">Welcome!</string>
     <string name="email_address">email address</string>
+    <string name="name_email_com">name@email.com</string>
+    <string name="Email_Address">Email Address</string>
     <string name="password">password</string>
+    <string name="Password">Password</string>
     <string name="show_password">show password</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="login">Login</string>
@@ -13,4 +16,15 @@
     <string name="google">Google</string>
     <string name="apple">Apple</string>
     <string name="facebook">Facebook</string>
+    <string name="empty" />
+    <string name="name">Name</string>
+    <string name="sign_up">Sign up</string>
+    <string name="create_an_account_to_get_started">Create an account to get started</string>
+    <string name="Your_Name">Your Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="Create_a_password">Create a password</string>
+    <string name="ive_read_and_agree_with_the">I\'ve read and agree with the</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="and_the">and the</string>
+    <string name="privacy_policy">Privacy Policy.</string>
 </resources>
